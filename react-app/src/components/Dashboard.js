@@ -23,7 +23,7 @@ const Dashboard = () => {
   const handleDeletePost = async (id) => {
     try {
       await deletePost(id);
-      loadPosts(); // Postu sildikten sonra verileri yeniden yükle
+      loadPosts(); 
     } catch (error) {
       console.error('Error deleting post:', error);
     }

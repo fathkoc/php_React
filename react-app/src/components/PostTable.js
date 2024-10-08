@@ -27,7 +27,7 @@ const PostTable = ({ posts, onDelete }) => {
         <TableBody>
           {posts.map((post) => (
             <TableRow key={post.id}>
-              <TableCell>{post.username}</TableCell>
+           <TableCell>{post.user ? post.user.username : 'Unknown'}</TableCell>
               <TableCell>{post.title}</TableCell>
               <TableCell>{post.body}</TableCell>
               <TableCell>
