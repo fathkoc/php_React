@@ -1,24 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { Button, Container, Box } from '@mui/material';
-import Dashboard from './Dashboard';
-import Users from './Users';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import UserList from './components/UserList';
+import { Container, Button } from '@mui/material';
 
 function App() {
   return (
     <Router>
-      <Container maxWidth="lg">
-        <Box display="flex" justifyContent="center" gap={2} padding={2}>
-          <Button component={Link} to="/" variant="contained" color="primary">
-            Posts
+      <Container>
+        <nav style={{ marginBottom: '16px', textAlign: 'center' }}>
+          <Button variant="contained" color="primary" href="/">
+            Dashboard
           </Button>
-          <Button component={Link} to="/users" variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" href="/users" style={{ marginLeft: '8px' }}>
             Users
           </Button>
-        </Box>
+        </nav>
         <Routes>
+          {/* Eğer URL belirtilmezse veya sadece '/' olursa Dashboard'a yönlendirme */}
           <Route path="/" element={<Dashboard />} />
-          <Route path="/users" element={<Users />} />
+          <Route path="/users" element={<UserList />} />
+          {/* Herhangi başka bir URL'de de Dashboard'u göster */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Container>
     </Router>
