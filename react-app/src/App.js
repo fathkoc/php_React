@@ -10,7 +10,7 @@ function App() {
       <Container maxWidth="lg">
         <Box display="flex" justifyContent="center" gap={2} padding={2}>
           <Button component={Link} to="/" variant="contained" color="primary">
-            Dashboard
+            Posts
           </Button>
           <Button component={Link} to="/users" variant="contained" color="secondary">
             Users
