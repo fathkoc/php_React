@@ -33,6 +33,8 @@ foreach ($users as $user) {
         'email' => $user['email'],
         'phone' => $user['phone'],
         'website' => $user['website'],
+        'created_at' => now(),
+        'updated_at' => now(),
     ]);
 }
 
@@ -48,7 +50,14 @@ foreach ($posts as $post) {
         'userId' => $post['userId'],
         'title' => $post['title'],
         'body' => $post['body'],
+        'created_at' => now(),
+        'updated_at' => now(),
     ]);
 }
 
 echo "Posts data has been inserted.\n";
+
+function now()
+{
+    return date('Y-m-d H:i:s');
+}
