@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {
+  Container,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -12,23 +23,41 @@ const Users = () => {
     try {
       const response = await axios.get('http://localhost:8000/users');
       setUsers(response.data);
-      console.log('Kullanıcılar:', response.data);
     } catch (error) {
-      console.error('Kullanıcı verileri çekilirken hata oluştu:', error);
+      console.error('Error fetching users:', error);
     }
   };
 
   return (
-    <div>
-      <h2>Users</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name} - {user.username}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Container maxWidth="lg">
+      <Paper style={{ padding: '16px', marginTop: '16px' }}>
+        <Typography variant="h4" gutterBottom>
+          Users
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Username</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell>{user.id}</TableCell>
+                  <TableCell>{user.username}</TableCell>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </Container>
   );
 };
 
