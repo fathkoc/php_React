@@ -1,27 +1,27 @@
 <?php
 
-declare(strict_types=1);
-
-use App\Application\Actions\User\ListUsersAction;
-use App\Application\Actions\User\ViewUserAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
-use Slim\Interfaces\RouteCollectorProxyInterface as Group;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 return function (App $app) {
-    $app->options('/{routes:.*}', function (Request $request, Response $response) {
-        // CORS Pre-Flight OPTIONS Request Handler
-        return $response;
+    $app->get('/users', function (Request $request, Response $response) {
+        $users = Capsule::table('users')->get();
+        $response->getBody()->write($users->toJson());
+        return $response->withHeader('Content-Type', 'application/json');
     });
 
-    $app->get('/', function (Request $request, Response $response) {
-        $response->getBody()->write('Hello world!');
-        return $response;
+    $app->get('/posts', function (Request $request, Response $response) {
+        $posts = Capsule::table('posts')->get();
+        $response->getBody()->write($posts->toJson());
+        return $response->withHeader('Content-Type', 'application/json');
     });
 
-    $app->group('/users', function (Group $group) {
-        $group->get('', ListUsersAction::class);
-        $group->get('/{id}', ViewUserAction::class);
+    $app->delete('/posts/{id}', function (Request $request, Response $response, $args) {
+        $postId = $args['id'];
+        Capsule::table('posts')->where('id', $postId)->delete();
+        $response->getBody()->write(json_encode(['message' => 'Post deleted']));
+        return $response->withHeader('Content-Type', 'application/json');
     });
 };
