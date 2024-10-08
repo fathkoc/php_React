@@ -13,23 +13,12 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const Dashboard = () => {
-  const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
 
+  // Verileri çekme işlemi
   useEffect(() => {
-    fetchUsers();
     fetchPosts();
   }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/users');
-      setUsers(response.data);
-      console.log('Kullanıcılar:', response.data);
-    } catch (error) {
-      console.error('Kullanıcı verileri çekilirken hata oluştu:', error);
-    }
-  };
 
   const fetchPosts = async () => {
     try {
@@ -44,7 +33,7 @@ const Dashboard = () => {
   const deletePost = async (id) => {
     try {
       await axios.delete(`http://localhost:8000/posts/${id}`);
-      fetchPosts(); // Postu sildikten sonra gönderileri tekrar getir
+      fetchPosts(); 
     } catch (error) {
       console.error('Post silinirken hata oluştu:', error);
     }
@@ -52,16 +41,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h2>Kullanıcılar</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name} - {user.username}
-          </li>
-        ))}
-      </ul>
-
-      <h2>Gönderiler</h2>
+      <h2>Posts</h2>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -75,7 +55,7 @@ const Dashboard = () => {
           <TableBody>
             {posts.map((post) => (
               <TableRow key={post.id}>
-                <TableCell>{post.username}</TableCell>
+                <TableCell>{post.username || 'Unknown'}</TableCell>
                 <TableCell>{post.title}</TableCell>
                 <TableCell>{post.body}</TableCell>
                 <TableCell>
