@@ -1,42 +1,109 @@
-# Slim Framework 4 Skeleton Application
 
-[![Coverage Status](https://coveralls.io/repos/github/slimphp/Slim-Skeleton/badge.svg?branch=master)](https://coveralls.io/github/slimphp/Slim-Skeleton?branch=master)
+# PHP & React Dashboard Uygulaması
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 4 application. This application uses the latest Slim 4 with Slim PSR-7 implementation and PHP-DI container implementation. It also uses the Monolog logger.
+Bu proje, PHP ve Slim Framework kullanılarak geliştirilen bir API ve React kullanılarak hazırlanan bir yönetim panelini içermektedir. API, kullanıcı ve gönderi bilgilerini yönetmek için kullanılırken, React tarafı bu verileri görselleştirmek ve kullanıcıya kolay bir yönetim arayüzü sunmak için kullanılır.
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+## Proje Yapısı
 
-## Install the Application
+- **Backend**: PHP, Slim Framework, Eloquent ORM
+- **Frontend**: React, Material-UI
+- **Veritabanı**: MySQL (Eloquent ORM ile yönetiliyor)
 
-Run this command from the directory in which you want to install your new Slim Framework application. You will require PHP 7.4 or newer.
+## Özellikler
 
-```bash
-composer create-project slim/slim-skeleton [my-app-name]
-```
+- Kullanıcıların ve gönderilerin listelenmesi.
+- Gönderilerin silinmesi.
+- Basit ve kullanıcı dostu arayüz.
+- RESTful API ile iletişim.
+- CORS desteği ile frontend ve backend iletişimi.
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+## Kurulum
 
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writable.
+### Gereksinimler
 
-To run the application in development, you can run these commands 
+- PHP 8.x ve üzeri
+- Composer
+- Node.js ve npm
+- MySQL
 
-```bash
-cd [my-app-name]
-composer start
-```
+### Backend Kurulumu
 
-Or you can use `docker-compose` to run the app with `docker`, so you can run these commands:
-```bash
-cd [my-app-name]
-docker-compose up -d
-```
-After that, open `http://localhost:8080` in your browser.
+1. Depoyu klonlayın:
+   ```bash
+   git clone https://github.com/fathkoc/php_React.git
+   cd proje-adi
+   ```
 
-Run this command in the application directory to run the test suite
+2. Gerekli PHP paketlerini yükleyin:
+   ```bash
+   composer install
+   ```
 
-```bash
-composer test
-```
+3. Veritabanı ayarlarını `app/settings.php` dosyasından düzenleyin.
 
-That's it! Now go build something cool.
+4. Veritabanı tablolarını oluşturun:
+   ```bash
+   php migrate.php
+   ```
+
+## JSONPlaceholder API'den Veri Çekme
+    Proje, JSONPlaceholder API'sinden `users` ve `posts` verilerini çekmek ve bunları veritabanına kaydetmek için bir PHP betiği içerir. Bu betik, `users` ve `posts` tablolarına verileri çeker ve veritabanına ekler.
+
+    Veri Çekme Betiğini Çalıştırma: Aşağıdaki komutla betiği çalıştırarak verileri çekin:
+    ```bash
+    php fetch-data.php
+
+5. PHP sunucusunu başlatın:
+   ```bash
+   php -S localhost:8000 -t public
+   ```
+
+### Frontend Kurulumu
+
+1. React uygulamasına geçiş yapın:
+   ```bash
+   cd react-app
+   ```
+
+2. Gerekli npm paketlerini yükleyin:
+   ```bash
+   npm install
+   ```
+
+3. React uygulamasını başlatın:
+   ```bash
+   npm start
+   ```
+
+## Kullanım
+
+- **Dashboard**: Gönderilerin ve kullanıcıların yönetimi için ana panel.
+- **Users**: Kullanıcıların listelendiği ekran.
+- **Posts**: Kullanıcıların gönderilerinin listelendiği ve silinebildiği ekran.
+
+## Proje Görselleri
+
+Aşağıda proje ekranlarından bazı görüntüler bulunmaktadır:
+
+### Dashboard
+![Kullanıcılar Ekranı](./screenshots/ss1.jpeg)
+
+### Kullanıcılar
+![Dashboard Ekranı](./screenshots/ss2.jpeg)
+
+## API Endpointleri
+
+### Kullanıcılar
+
+- `GET /users`: Tüm kullanıcıları getirir.
+- `GET /users/{id}`: Belirli bir kullanıcıyı getirir.
+
+### Gönderiler
+
+- `GET /posts`: Tüm gönderileri getirir.
+- `GET /posts/{id}`: Belirli bir gönderiyi getirir.
+- `DELETE /posts/{id}`: Belirli bir gönderiyi siler.
+
+
+
+
